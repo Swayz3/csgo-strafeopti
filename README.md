@@ -1,2 +1,3 @@
 # csgo-strafeopti
-strafe optimizer for CS-GO
+strafe optimizer for CS-GO bhop
+

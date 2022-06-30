@@ -18,9 +18,11 @@ SendMode Input
 drawString(status_as_x, status_as_y, status_as_text, 0xff0000, status_as_size, "", 008800)
 SendInput {blind}{d up}
 SendInput {blind}{a up}
-
+#IfWinActive ahk_exe csgo.exe
 $*Left::
-while GetKeyState("left", "P")
+Suspend, Toggle
+drawString(status_as_x, status_as_y, status_as_text, 0x00ff00, status_as_size, "", 008800)
+loop
 {
 		MouseGetPos, x
 		if (x>screenmid)
@@ -34,7 +36,6 @@ while GetKeyState("left", "P")
 			SendInput {blind}{a down}
 		}
 sleep 10
-drawString(status_as_x, status_as_y, status_as_text, 0x00ff00, status_as_size, "", 008800)
 }
 return
 

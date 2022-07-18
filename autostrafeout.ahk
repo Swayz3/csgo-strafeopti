@@ -1,5 +1,8 @@
+Menu, TRAY, Icon, autostrafe.ico
+Menu, TRAY, Tip, Auto-Strafe by Swayze
+
 screenmid := A_ScreenWidth / 2
-var1 = 10 ;sleep time
+var1 = 6 ;sleep time
 ;######################################## - Status Options
 status_as_x = 255
 status_as_y = 8
@@ -22,11 +25,11 @@ SendMode Input
 drawString(status_as_x, status_as_y, status_as_text, 0xff0000, status_as_size, "", 008800)
 SendInput {blind}{d up}
 SendInput {blind}{a up}
-#IfWinActive ahk_exe csgo.exe
+Run mousetrail.ahk
+
 $*Left::
 Suspend, Toggle
 drawString(status_as_x, status_as_y, status_as_text, 0x00ff00, status_as_size, "", 008800)
-
 loop
 {
 if(GetKeyState("w", "p"))
@@ -35,28 +38,36 @@ if(GetKeyState("w", "p"))
 	SendInput {blind}{a up}
 	goto, Bhopstart
 }
+if(GetKeyState("s", "p"))
+{
+	SendInput {blind}{d up}
+	SendInput {blind}{a up}
+	goto, Bhopstart
+}
 if(GetKeyState("a", "p"))
 {
 	SendInput {blind}{d up}
+	SendInput {blind}{a down}
 	goto, Bhopstart
 }
 if(GetKeyState("d", "p"))
 {
 	SendInput {blind}{a up}
+	SendInput {blind}{d down}
 	goto, Bhopstart
 }
 else
-		MouseGetPos, x
-		if (x>screenmid)
-		{
-			SendInput {blind}{a up}
-			SendInput {blind}{d down}
-		}
-		else if (x<screenmid)
-		{
-			SendInput {blind}{d up}
-			SendInput {blind}{a down}
-		}
+	MouseGetPos, x
+	if (x>screenmid)
+	{
+		SendInput {blind}{a up}
+		SendInput {blind}{d down}
+	}
+	else if (x<screenmid)
+	{
+		SendInput {blind}{d up}
+		SendInput {blind}{a down}
+	}
 Bhopstart:
 sleep %var1%
 }
@@ -72,7 +83,7 @@ $*Left up::
 }
 return
 
-~$*up::
+$*up::
 while(GetKeyState("up", "p"))
 {
 	var1 += 1
@@ -82,7 +93,7 @@ while(GetKeyState("up", "p"))
 }
 return
 
-~$*down::
+$*down::
 while(GetKeyState("down", "p"))
 {
 	var1 -= 1
@@ -91,8 +102,6 @@ while(GetKeyState("down", "p"))
 	SoundBeep
 }
 return
-
-
 drawString(x, y, string, color, size, Font, background)
 {
 	Gui, 2:destroy
@@ -116,5 +125,6 @@ drawString3(x, y, string, color, size, Font, background)
     Gui, 3:Show, y%Y% x%X% NoActivate, ch
     WinSet, TransColor, c%background% 255
 }
+
 <!Esc::
 ExitApp
